@@ -92,7 +92,9 @@ function WidgetRender() {
 			// Render background image
 			// Creat image
 			var image = new Image();
-			image.
+			image.src = widgetList[tempNumber].backgroundImage;
+			// Draw image
+			drawInstance.drawImage(image, 0, 0, widgetList[tempNumber].width, widgetList[tempNumber].height);
 		}
 	}
 }
