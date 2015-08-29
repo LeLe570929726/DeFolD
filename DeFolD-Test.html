@@ -4,14 +4,22 @@
 		<script src="DeFolD.js"></script>
 	</head>
 	<body>
-		<div>
-			<canvas id="testCanvas" style="border:1px solid #d3d3d3; top: 0px; left: 0px; position: absolute;" height=644 width=1022>Your browser does not support the canvas tag :(</canvas>
-		</div>
+		<canvas id="testCanvas" style="top: 0px; left: 0px; position: absolute;" height=796 width=1380>Your browser does not support the canvas tag :(</canvas>
 		
 		<script>
 			startRenderLoop();
 			var widgetObject = new Widget("testCanvas");
-			widgetObject.backgroundImage = "background_2.jpg";
+			widgetObject.backgroundImage = "QQ图片20150829204409.jpg";
+			widgetObject.backgroundImageMode = 4;
+	
+			window.onload = function() {
+				widgetObject.height = document.body.clientHeight;
+				widgetObject.width = document.body.clientWidth;
+			}
+			window.onresize = function() {
+				widgetObject.height = document.body.clientHeight;
+				widgetObject.width = document.body.clientWidth;
+			}
 		</script>
 		
 	</body>

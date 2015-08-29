@@ -29,6 +29,8 @@ function Widget(canvasID) {
 	this.width = getCanvasWidth(canvasID);
 	// Widget background image
 	this.backgroundImage = "";
+	// Widget background image mode
+	this.backgroundImageMode = 0;						// 0=stretch 1=tile 2=repetition 3=x-repetition 4=y-repetition
 	// Widget backgournd color
 	this.backgroundColor = "#000000";
 	// Add list
@@ -81,6 +83,10 @@ function WidgetRender() {
 	// Traversal widget list
 	for(tempNumber in widgetList) {
 		var drawInstance = getCanvasDrawObject(widgetList[tempNumber].id);
+		// Render widget size
+		var widget = getObject(widgetList[tempNumber].id);
+		widget.height = widgetList[tempNumber].height;
+		widget.width = widgetList[tempNumber].width;
 		// Render background
 		if(widgetList[tempNumber].backgroundImage == "") {
 			// Render background color
@@ -93,8 +99,61 @@ function WidgetRender() {
 			// Creat image
 			var image = new Image();
 			image.src = widgetList[tempNumber].backgroundImage;
-			// Draw image
-			drawInstance.drawImage(image, 0, 0, widgetList[tempNumber].width, widgetList[tempNumber].height);
+			// Choose render mode
+			switch(widgetList[tempNumber].backgroundImageMode) {
+			// Stretch mode
+			case 0:
+				if(image.width != 0 && image.height != 0) {
+					drawInstance.drawImage(image, 0, 0, widgetList[tempNumber].width, widgetList[tempNumber].height);
+				} else {
+					drawInstance.drawImage(image, 0, 0, image.width,  image.height);
+				}
+				break;
+			// Tile mode
+			case 1:
+				if(image.width != 0 && image.height != 0) {
+					drawInstance.drawImage(image, 0, 0, image.width, image.height);
+				} else {
+					drawInstance.drawImage(image, 0, 0, image.width,  image.height);
+				}
+				break;
+			// Repetition mode
+			case 2:
+				if(image.width != 0 && image.height != 0) {
+					// Check y
+					for(var numberY = 0; numberY <= widgetList[tempNumber].height; numberY += image.height) {
+						// Check x
+						for(var numberX = 0; numberX <= widgetList[tempNumber].width; numberX += image.width) {
+							drawInstance.drawImage(image, numberX, numberY, image.width, image.height);
+						}
+					}
+				} else {
+					drawInstance.drawImage(image, 0, 0, image.width,  image.height);
+				}
+				break;
+			// X-repetition mode
+			case 3:
+				if(image.width != 0 && image.height != 0) {
+					// Check x
+					for(var numberX = 0; numberX <= widgetList[tempNumber].width; numberX += image.width) {
+						drawInstance.drawImage(image, numberX, 0, image.width, image.height);
+					}
+				} else {
+					drawInstance.drawImage(image, 0, 0, image.width,  image.height);
+				}
+				break;
+			// Y-repetition mode
+			case 4:
+				if(image.width != 0 && image.height != 0) {
+					// Check y
+					for(var numberY = 0; numberY <= widgetList[tempNumber].height; numberY += image.height) {
+						drawInstance.drawImage(image, 0, numberY, image.width, image.height);
+					}
+				} else {
+					drawInstance.drawImage(image, 0, 0, image.width,  image.height);
+				}
+				break;
+			}
 		}
 	}
 }
@@ -110,3 +169,9 @@ var widgetList = new Array();
 /*************************************************************************
 ** General API
 *************************************************************************/
+/*************************************************************************
+** Get object
+*************************************************************************/
+function getObject(objectID) {
+	return document.getElementById(objectID);
+}
