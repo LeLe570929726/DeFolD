@@ -3,11 +3,10 @@
 	<head>
 		<script src="DeFolD.js"></script>
 	</head>
-	<body>
-		<canvas id="testCanvas" style="top: 0px; left: 0px; position: absolute;" height=796 width=1380>Your browser does not support the canvas tag :(</canvas>
+	<body style="overflow: hidden;">
+		<canvas id="testCanvas" style="top: 0px; left: 0px; position: absolute; overflow: hidden;" height=796 width=1380>Your browser does not support the canvas tag :(</canvas>
 		
 		<script>
-			startRenderLoop();
 			var widgetObject = new Widget("testCanvas");
 			widgetObject.backgroundImage = "ED02.png";
 			widgetObject.backgroundImageMode = 5;

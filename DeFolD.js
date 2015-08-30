@@ -14,6 +14,8 @@
 ** http://www.gnu.org/licenses/gpl.html
 *************************************************************************/
 
+
+
 /*************************************************************************
 ** Widget class
 *************************************************************************/
@@ -23,6 +25,8 @@
 function Widget(canvasID) {
 	// Widget ID
 	this.id = canvasID;
+	// Widget top
+	this.top = getCanvasTop(canvasID);
 	// Widget Height
 	this.height = getCanvasHeight(canvasID);
 	// Widget width
@@ -35,12 +39,29 @@ function Widget(canvasID) {
 	this.backgroundColor = "#000000";
 	// Add list
 	widgetList.push(this);
+	// Set render flag
+	if(isStartRenderLoop == false) {
+		isStartRenderLoop = true;
+		startRenderLoop();
+	}
 }
 /*************************************************************************
 ** Get canvas draw object
 *************************************************************************/
 function getCanvasDrawObject(canvasID) {
 	return document.getElementById(canvasID).getContext("2d");
+}
+/*************************************************************************
+** Get canvas's top
+*************************************************************************/
+function getCanvasTop(canvasID) {
+	return  document.getElementById(canvasID).offsetTop;
+}
+/*************************************************************************
+** Get canvas's left
+*************************************************************************/
+function getCanvasLeft(canvasID) {
+	return  document.getElementById(canvasID).offsetLeft;
 }
 /*************************************************************************
 ** Get canvas's height
@@ -55,9 +76,15 @@ function getCanvasWidth(canvasID) {
 	return  document.getElementById(canvasID).offsetWidth;
 }
 
+
+
 /*************************************************************************
 ** Render 
 *************************************************************************/
+/*************************************************************************
+** Start render loop flag
+*************************************************************************/
+var isStartRenderLoop = false;
 /*************************************************************************
 ** Start render loop
 *************************************************************************/
@@ -175,6 +202,8 @@ function WidgetRender() {
 	}
 }
 
+
+
 /*************************************************************************
 ** Manager
 *************************************************************************/
@@ -182,6 +211,8 @@ function WidgetRender() {
 ** Widget list
 *************************************************************************/
 var widgetList = new Array();
+
+
 
 /*************************************************************************
 ** General API
