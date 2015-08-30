@@ -30,7 +30,7 @@ function Widget(canvasID) {
 	// Widget background image
 	this.backgroundImage = "";
 	// Widget background image mode
-	this.backgroundImageMode = 0;						// 0=stretch 1=tile 2=repetition 3=x-repetition 4=y-repetition
+	this.backgroundImageMode = 0;						// 0=stretch 1=tile 2=repetition 3=x-repetition 4=y-repetition 5=self-adaption
 	// Widget backgournd color
 	this.backgroundColor = "#000000";
 	// Add list
@@ -148,6 +148,23 @@ function WidgetRender() {
 					// Check y
 					for(var numberY = 0; numberY <= widgetList[tempNumber].height; numberY += image.height) {
 						drawInstance.drawImage(image, 0, numberY, image.width, image.height);
+					}
+				} else {
+					drawInstance.drawImage(image, 0, 0, image.width,  image.height);
+				}
+				break;
+			// Self-adaption
+			case 5:
+				if(image.width != 0 && image.height != 0) {
+					var xProportion = image.width / widgetList[tempNumber].width;
+					var yProportion = image.height / widgetList[tempNumber].height;
+					var imageProportion = image.width / image.height;
+					if (xProportion < yProportion) {
+						drawInstance.drawImage(image, 0, 0, widgetList[tempNumber].width, widgetList[tempNumber].width / imageProportion);
+					} else if (xProportion > yProportion) {
+						drawInstance.drawImage(image, 0, 0, widgetList[tempNumber].height * imageProportion, widgetList[tempNumber].height);
+					} else if (xProportion == yProportion) {
+						drawInstance.drawImage(image, 0, 0, widgetList[tempNumber].width, widgetList[tempNumber].height);
 					}
 				} else {
 					drawInstance.drawImage(image, 0, 0, image.width,  image.height);
