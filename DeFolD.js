@@ -153,7 +153,7 @@ function WidgetRender() {
 					drawInstance.drawImage(image, 0, 0, image.width,  image.height);
 				}
 				break;
-			// Self-adaption
+			// Self-adaption mode
 			case 5:
 				if(image.width != 0 && image.height != 0) {
 					var xProportion = image.width / widgetList[tempNumber].width;
